@@ -1,0 +1,63 @@
+
+<html>
+    <script>
+        // function populateDiv(){
+        //     const a = document.getElementById('firstNumber').value
+        //     const b = document.getElementById('secondNumber').value
+        //     x = document.getElementById("finalSum")
+        //     console.log(x)
+            // fetch
+
+            // const res = fetch("https://sum-server.100xdevs.com/sum?a="+ a +"&b="+ b)
+            // .then((response)=>{
+            //     console.log(response);
+
+            //     response.text()
+            //         .then(function(ans){
+            //             console.log(ans);
+            //             x.innerHTML = ans;
+            //         })
+            // })
+            // console.log(res)
+
+// Cleaner asyn await
+                let timeout;
+        function debouncedPopulateDiv(){
+            clearTimeout(timeout);
+            timeout = setTimeout(function(){
+                populateDiv()
+            }, 1000);
+
+
+        }
+        
+        async function populateDiv(){
+            const a = document.getElementById('principal').value
+            const b = document.getElementById('rate').value
+            const c = document.getElementById('time').value
+            x = document.getElementById("finalSum")
+            console.log(x)
+
+            let res = await fetch("https://sum-server.100xdevs.com/interest?principal="+ a +"&rate="+ b+"&time="+c)
+            ans = await res.json();
+            console.log(JSON.stringify(ans))
+            x.innerHTML = JSON.stringify(ans);
+
+
+            // x.innerHTML = parseInt(a) + parseInt(b);
+        }
+
+
+// axios :
+
+  
+    </script>
+
+<body>
+    <input oninput="debouncedPopulateDiv()" id="principal" type="text" placeholder="Princiapl Amount"/><br><br>
+    <input oninput="debouncedPopulateDiv()" id="rate" type="text" placeholder="Rate"/><br><br>
+    <input oninput="debouncedPopulateDiv()" id="time" type="text" placeholder="Time"/><br><br>
+
+    <div  id="finalSum"></div>
+</body>
+</html>
